@@ -5,6 +5,7 @@ global:
   podSecurityPolicy:
     create: false
   archive:
+    storageType: S3Storage
     s3Url: "https://minio"
     s3Bucket: "archive"
     s3AccessKey: idDQBxLpXoM8l88l
@@ -18,7 +19,8 @@ global:
   broker:
     host: "broker-sda-mq"
     exchange: "lega"
-    vhost: "/"
+    port: 5671
+    verifyPeer: false
     password: "admin"
     username: "admin"
   cega:
@@ -30,8 +32,6 @@ global:
     passphrase: oaagCP1YgAZeEyl2eJAkHv9lkcWXWFgm
   db:
     host: "postgres-sda-db"
-    passIngest: "lega_in"
-    passOutgest: "lega_out"
   elixir:
     pubKey: token.pub
     oidcdHost: "http://oidc-server"
@@ -49,3 +49,28 @@ global:
     hostName:
       auth: sda-sda-svc-auth
   log: debug
+# Specific config per-service
+ingest:
+  repository: neicnordic/sda-pipeline
+  imageTag: release-v0.1.1
+  errorKey: "errmsg"
+  routingKey: "archived"
+  queue: "files"
+verify:
+  repository: neicnordic/sda-pipeline
+  imageTag: release-v0.1.1
+  errorKey: "errmsg"
+  routingKey: "files.verified"
+  queue: "archived"
+finalize:
+  repository: neicnordic/sda-pipeline
+  imageTag: release-v0.1.1
+  errorKey: "errmsg"
+  routingKey: "files.completed"
+  queue: "stableIDs"
+doa:
+  repository: neicnordic/sda-doa
+  imageTag: release-v1.2.0
+s3Inbox:
+  repository: neicnordic/sda-s3proxy
+  imageTag: release-v0.1.2

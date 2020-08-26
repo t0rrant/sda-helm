@@ -11,7 +11,7 @@ global:
     host: "broker-sda-mq"
     exchange: "lega"
     port: 5671
-    verifyHostname: false
+    verifyPeer: false
     password: "admin"
     username: "admin"
   cega:
@@ -27,3 +27,25 @@ global:
     user: "lega"
     existingClaim: inbox-volume
   log: debug
+# Specific config per-service
+ingest:
+  repository: neicnordic/sda-pipeline
+  imageTag: release-v0.1.1
+  errorKey: "errmsg"
+  routingKey: "archived"
+  queue: "files"
+verify:
+  repository: neicnordic/sda-pipeline
+  imageTag: release-v0.1.1
+  errorKey: "errmsg"
+  routingKey: "files.verified"
+  queue: "archived"
+finalize:
+  repository: neicnordic/sda-pipeline
+  imageTag: release-v0.1.1
+  errorKey: "errmsg"
+  routingKey: "files.completed"
+  queue: "stableIDs"
+doa:
+  repository: neicnordic/sda-doa
+  imageTag: release-v1.2.0
