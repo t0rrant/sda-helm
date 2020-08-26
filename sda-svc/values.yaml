@@ -10,7 +10,7 @@ global:
   c4ghPath: ""
   tlsPath: ""
   jwtPath: ""
-  
+
 # Name of an injected config file, located in the secretsPath
 # If the file is located in a subpath it can be set using the confFilePath
 # If no conf file is specified DB and MQ connections will be configured via ENVs
@@ -104,6 +104,7 @@ global:
     useTLS: true
 
   broker:
+    durable: false
     host: ""
     exchange: ""
     port: 5671
@@ -244,6 +245,9 @@ doa:
   annotations: {}
 
 finalize:
+  routingKey: ""
+  errorKey: ""
+  queue: ""
   name: finalize
   replicaCount: 1
   repository: neicnordic/sda-base
@@ -262,6 +266,9 @@ finalize:
   annotations: {}
 
 ingest:
+  routingKey: ""
+  errorKey: ""
+  queue: ""
   name: ingest
   replicaCount: 1
   repository: neicnordic/sda-base
@@ -318,6 +325,9 @@ sftpInbox:
   annotations: {}
 
 verify:
+  routingKey: ""
+  errorKey: ""
+  queue: ""
   replicaCount: 1
   repository: neicnordic/sda-base
   imageTag: latest
