@@ -20,7 +20,7 @@ global:
     host: "broker-sda-mq"
     exchange: "lega"
     port: 5671
-    verifyPeer: false
+    verifyPeer: true
     password: "admin"
     username: "admin"
   cega:
